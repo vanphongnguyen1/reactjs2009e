@@ -1,6 +1,6 @@
 import React from 'react'
-import Menu from './components/Menu/index'
-import Quiz from './components/Quiz/index'
+import Menu from './components/Menu'
+import Quiz from './components/Quiz'
 import './App.css'
 import './components/FontAwesomeIcon'
 

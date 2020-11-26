@@ -8,23 +8,23 @@
     background-color: #cad2d5;
     padding: 30px 0;
 }
-.box_quiz {
+.box__quiz {
     width: 500px;
     margin: 0 auto;
     border-radius: 5px;
     overflow: hidden;
     box-shadow: 0px 2px 5px 5px #abb3b6;
 }
-.quiz_head {
+.quiz__head {
     background: #f4f4f4;
     padding: 20px;
     text-align: center;
     border-bottom: 1px solid #dcdcdc;
 }
-.quiz_heading {
+.quiz__heading {
     font-size: 25px;
 }
-.complate_bg {
+.complate__bg {
     width: 120px;
     height: 15px;
     background: #808080;
@@ -32,23 +32,23 @@
     margin: 10px auto;
     border-radius: 50px;
 }
-.quiz_sub-heading {
+.quiz__sub-heading {
     font-weight: 500;
 }
 .question {
     padding: 30px 20px;
     background: #fafafa;
 }
-.question_thread {
+.question__thread {
     text-align: center;
     font-weight: 500;
     font-size: 20px;
 }
-.answer_list {
+.answer__list {
     margin-top: 20px;
     list-style: none;
 }
-.answer_item {
+.answer__item {
     padding: 10px 20px;
     margin-top: 15px;
     background: #ededed;
@@ -61,11 +61,12 @@
     justify-content: space-between;
     border-top: 1px solid #dcdcdc;
 }
-.arrow-next,
-.arrow-back {
+.arrow--next,
+.arrow--back {
     border: 1px solid #bcbcbc;
     padding: 7px 15px;
     border-radius: 50px;
     background: #f4f4f4;
     outline: none;
+    cursor: pointer;
 }

@@ -6,41 +6,45 @@ class Menu extends React.Component {
     return (
       <>
         <div className="menu">
-          <ul className="menu_list">
-            <li className="menu_item">
-              <a className="menu_link" href="#a">
-                <span className="menu_icon">
+          <ul className="menu__list">
+            <li className="menu__item">
+              <a className="menu__link" href="#a">
+                <span className="menu__icon">
                   <FontAwesomeIcon icon="home"/>
                 </span>
               </a>
             </li>
-            <li className="menu_item">
-              <a className="menu_link" href="#a">
-                <span className="menu_icon">
+
+            <li className="menu__item">
+              <a className="menu__link" href="#a">
+                <span className="menu__icon">
                   <FontAwesomeIcon icon="cube"/>
                 </span>
                 Project
               </a>
             </li>
-            <li className="menu_item">
-              <a className="menu_link" href="#a">
-                <span className="menu_icon">
+
+            <li className="menu__item">
+              <a className="menu__link" href="#a">
+                <span className="menu__icon">
                   <FontAwesomeIcon icon="angle-double-right"/>
                 </span>
                 Breadcrumb
               </a>
             </li>
-            <li className="menu_item">
-              <a className="menu_link" href="#a">
-                <span className="menu_icon">
+
+            <li className="menu__item">
+              <a className="menu__link" href="#a">
+                <span className="menu__icon">
                   <FontAwesomeIcon icon="rocket"/>
                 </span>
                 Getting started
               </a>
             </li>
-            <li className="menu_item">
-              <a className="menu_link" href="#a">
-                <span className="menu_icon">
+            
+            <li className="menu__item">
+              <a className="menu__link" href="#a">
+                <span className="menu__icon">
                   <FontAwesomeIcon icon="arrow-down"/>
                 </span>
                 Download
