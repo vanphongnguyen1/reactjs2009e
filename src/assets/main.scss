@@ -1,0 +1,213 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+// ------------Varlibel----------------------------------
+$color-bg: #eeeeee;
+$color-main: #e6842f;
+$color-white: #fff;
+$color-grey: #ccc;
+$color-grey-dank: #777777;
+$color-grey-line: #efefef;
+
+// -------------End varlibel---------------------------------
+
+// -------------Mixin ---------------------------------
+@mixin pseudo--triangle {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    z-index: 2;
+}
+@mixin pseudo--rim {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 6px;
+    background-color: $color-main;
+    z-index: 2;
+}
+
+// -------------End Mixin---------------------------------
+
+// -------------Animations---------------------------------
+.relative {
+    position: relative;
+}
+.active.active {
+    position: relative;
+    box-shadow: 0px 0px 3px 0px $color-grey;
+    border: none;
+    &::after,
+    &::before {
+        @include pseudo--rim;
+    }
+    &::after {
+        right: 100%;
+    }
+    &::before {
+        left: 100%;
+    }
+}
+.active .menu__link{
+    color: $color-main;
+}
+.menu__item.active {
+    .menu__link {
+        &::after,
+        &::before {
+            @include pseudo--triangle;
+        }
+        &::after {
+            right: 0;
+            border-right: 7px solid $color-main;
+        }
+        &::before {
+            left: 0;
+            border-left: 7px solid $color-main;
+        }
+    }
+}
+
+// -------------End Animations---------------------------------
+
+// -------------Menu---------------------------------
+.menu {
+    width: 1200px;
+    margin: 0 auto;
+    background-color: $color-bg;
+    padding: 50px;
+
+    &__list {
+        width: 230px;
+    }
+
+    &__item {
+        list-style: none;
+        background-color: $color-white;
+        border-bottom: 1px solid $color-grey-line;
+
+        &:first-child {
+            border-radius: 5px 5px 0 0;
+        }
+
+        &:last-child {
+            border-radius: 0 0 5px 5px;
+        }
+
+        &:hover > .menu__link {
+            color: $color-main;
+        }
+
+        .box__search {
+            display: flex;
+            position: relative;
+            padding: 15px 10px;
+
+            &--input {
+                width: 100%;
+                outline: none;
+                height: 30px;
+                padding: 5px 10px;
+                font-size: 17px;
+                border: 1px solid $color-grey-line;
+                color: $color-grey-dank;
+            }
+
+            &--icon {
+                position: absolute;
+                height: 30px;
+                line-height: 30px;
+                background-color: $color-main;
+                padding: 0 10px;
+                color: $color-white;
+                right: 10px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #d86807;
+                }
+            }
+        }
+    }
+
+    &__link {
+        text-decoration: none;
+        color: $color-grey-dank;
+        padding: 15px 20px;
+        display: flex;
+        transition: all 0.2s ease-in-out;
+
+        &--icon{
+            display: block;
+            font-size: 25px;
+            margin-right: 10px;
+        }
+
+        &--boxtext{
+            &-title {
+                display: block;
+                text-transform: uppercase;
+                font-weight: 700;
+                font-size: 17px;
+            }
+
+            &-subtitle {
+                display: block;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+    }
+
+    &__item:hover > &__children {
+        opacity: 1;
+        visibility: visible;
+        animation: let-to-right 0.4s ease-in-out;
+    }
+
+    &__children {
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 100%;
+        opacity: 0;
+        visibility: hidden;
+
+        &::before {
+            @include pseudo--rim;
+            left: 0;
+        }
+    }
+
+    &__children .menu__item:first-child{
+        position: relative;
+
+        &::before {
+            @include pseudo--triangle;
+            border-right: 7px solid $color-main;
+            right: 100%;
+        }
+    }
+}
+
+// -------------End Menu---------------------------------
+
+// -------------Keyframes Animation---------------------------------
+@keyframes let-to-right {
+    0% {
+        left: 10%;
+        opacity: 0;
+        visibility: hidden;
+    }
+    100% {
+        left: 100%;
+        opacity: 1;
+        visibility: visible;
+    }
+}
