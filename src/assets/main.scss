@@ -88,9 +88,9 @@ $color-grey-line: #efefef;
     }
 
     &__item {
+        position: relative;
         list-style: none;
         background-color: $color-white;
-        border-bottom: 1px solid $color-grey-line;
 
         &:first-child {
             border-radius: 5px 5px 0 0;
@@ -142,6 +142,7 @@ $color-grey-line: #efefef;
         padding: 15px 20px;
         display: flex;
         transition: all 0.2s ease-in-out;
+        border-bottom: 1px solid #efefef;
 
         &--icon{
             display: block;
