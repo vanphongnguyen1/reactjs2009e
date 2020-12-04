@@ -21,7 +21,13 @@ class Item extends React.Component {
               onClick={ this.onHandleChecked }
             />
 
-            <span className="box-todo__link--text">{ task.text }</span>
+            <span
+              className={ task.text.length >= 55
+                ? 'box-todo__link--text max-text'
+                : 'box-todo__link--text'}
+            >
+              { task.text }
+            </span>
           </span>
 
           <span

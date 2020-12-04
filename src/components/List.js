@@ -19,7 +19,7 @@ class List extends React.Component {
 
     return(
       <>
-        <ul className="box-todo__list">
+        <ul className={ tasks.length > 7 ? 'box-todo__list overflowy' : 'box-todo__list'}>
           { elements }
         </ul>
       </>

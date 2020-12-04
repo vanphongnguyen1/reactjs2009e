@@ -128,12 +128,12 @@ class App extends React.Component {
     localStorage.setItem('tasks',JSON.stringify(list))
   }
 
-  onClickAll = params => {
-    if (params) {
-      const list = JSON.parse(localStorage.getItem('tasks'))
-        ? JSON.parse(localStorage.getItem('tasks'))
-        : []
+  onClickTags = params => {
+    let list = JSON.parse(localStorage.getItem('tasks'))
+      ? JSON.parse(localStorage.getItem('tasks'))
+      : []
 
+    if (params.toLowerCase() === 'all') {
       this.setState({
         tasks: list,
         tags: {
@@ -143,63 +143,45 @@ class App extends React.Component {
         },
         dataTabs: list
       })
-    }
-  }
 
-  onClickHome = params => {
-    if (params) {
-      let list = JSON.parse(localStorage.getItem('tasks'))
-        ? JSON.parse(localStorage.getItem('tasks'))
-        : []
-
+    } else if (params.toLowerCase() === 'home') {
       list = list.filter(task => task.tags.home === true)
-      this.setState({
-        tasks: list,
-        tags: {
-          home: true,
-          work: false,
-          school: false,
-        },
-        dataTabs: list
-      })
-    }
-  }
 
-  onClickWork = params => {
-    if (params) {
-      let list = JSON.parse(localStorage.getItem('tasks'))
-        ? JSON.parse(localStorage.getItem('tasks'))
-        : []
+        this.setState({
+          tasks: list,
+          tags: {
+            home: true,
+            work: false,
+            school: false,
+          },
+          dataTabs: list
+        })
 
+    } else if (params.toLowerCase() === 'work') {
       list = list.filter(task => task.tags.work === true)
-      this.setState({
-        tasks: list,
-        tags: {
-          home: false,
-          work: true,
-          school: false,
-        },
-        dataTabs: list
-      })
-    }
-  }
 
-  onClickSchool = params => {
-    if (params) {
-      let list = JSON.parse(localStorage.getItem('tasks'))
-        ? JSON.parse(localStorage.getItem('tasks'))
-        : []
+        this.setState({
+          tasks: list,
+          tags: {
+            home: false,
+            work: true,
+            school: false,
+          },
+          dataTabs: list
+        })
 
+    } else if (params.toLowerCase() === 'school') {
       list = list.filter(task => task.tags.school === true)
-      this.setState({
-        tasks: list,
-        tags: {
-          home: false,
-          work: false,
-          school: true,
-        },
-        dataTabs: list
-      })
+
+        this.setState({
+          tasks: list,
+          tags: {
+            home: false,
+            work: false,
+            school: true,
+          },
+          dataTabs: list
+        })
     }
   }
 
@@ -238,10 +220,7 @@ class App extends React.Component {
 
             <Tags
               tasks={ tasks }
-              onClickAll={ this.onClickAll }
-              onClickHome={ this.onClickHome }
-              onClickWork={ this.onClickWork }
-              onClickSchool={ this.onClickSchool }
+              onClickTags={ this.onClickTags }
             />
 
             <List

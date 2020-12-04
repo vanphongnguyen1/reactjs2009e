@@ -25,24 +25,9 @@ class Tags extends React.Component {
     e.currentTarget.classList.add('active')
   }
 
-  onClickAll = e => {
+   onClickTags = e => {
     this.onClick(e)
-    this.props.onClickAll(true)
-  }
-
-  onClickHome = e => {
-    this.onClick(e)
-    this.props.onClickHome(true)
-  }
-
-  onClickWork = e => {
-    this.onClick(e)
-    this.props.onClickWork(true)
-  }
-
-  onClickSchool = e => {
-    this.onClick(e)
-    this.props.onClickSchool(true)
+    this.props.onClickTags(e.currentTarget.innerText)
   }
 
   render() {
@@ -53,28 +38,28 @@ class Tags extends React.Component {
             Tags
           </span>
 
-          <span className="box-tag active" onClick={ this.onClickAll }>
+          <span className="box-tag active" onClick={ this.onClickTags }>
             <span className="fas fa-circle box-tag__dot-all" />
             <span className="box-tag__all">
               All
             </span>
           </span>
 
-          <span className="box-tag" onClick={ this.onClickHome }>
+          <span className="box-tag" onClick={ this.onClickTags }>
             <span className="fas fa-circle box-tag__dot-home" />
             <span className="box-tag__home">
               Home
             </span>
           </span>
 
-          <span className="box-tag" onClick={ this.onClickWork }>
+          <span className="box-tag" onClick={ this.onClickTags }>
             <span className="fas fa-circle box-tag__dot-work" />
             <span className="box-tag__work">
               Work
             </span>
           </span>
 
-          <span className="box-tag" onClick={ this.onClickSchool }>
+          <span className="box-tag" onClick={ this.onClickTags }>
             <span className="fas fa-circle box-tag__dot-school" />
             <span className="box-tag__school">
               School
