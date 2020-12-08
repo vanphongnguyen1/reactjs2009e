@@ -56,19 +56,31 @@ class Body extends React.Component {
     this.loCalData(tasks)
   }
 
-  onClickActive = () => {
+  activeTabs = e => {
+    const tabs = document.querySelectorAll('.tab-bottom__box-tab .tab-group')
+
+    for (let i = 0; i < tabs.length; i++ ) {
+      tabs[i].classList.remove('active')
+    }
+    e.target.classList.add('active')
+  }
+
+  onClickActive = e => {
+    this.activeTabs(e)
     this.setState({
       completed: '0'
     })
   }
 
-  onClickCompl = () => {
+  onClickCompl = e => {
+    this.activeTabs(e)
     this.setState({
       completed: '1'
     })
   }
 
-  onClickAllTasks = () => {
+  onClickAllTasks = e => {
+    this.activeTabs(e)
     this.setState({
       completed: ''
     })
