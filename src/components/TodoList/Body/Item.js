@@ -2,17 +2,16 @@ import React from 'react';
 import { ContextTasks } from '../Context/ContextInput'
 
 const Item = props => {
-
   const onClickClose = (id, tasks, setTasks) => {
     tasks = tasks.filter(task => task.id !== id)
     setTasks(tasks)
   }
 
   const onClickChecked = (id, tasks, setTasks) => {
-    const handleTask = tasks.find(task => task.id === id)
+    const [...newTasks] = tasks
+    const handleTask = newTasks.find(task => task.id === id)
     handleTask.checked = !handleTask.checked
-    setTasks(tasks)
-    // console.log(tasks)
+    setTasks(newTasks)
   }
 
   return(

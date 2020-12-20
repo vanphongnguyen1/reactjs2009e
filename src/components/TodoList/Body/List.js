@@ -25,7 +25,7 @@ const List = props => {
     <>
       <ul
         className={
-          props.tasks.length > 8 ?
+          handleRender().length > 8 ?
           'box-todo__list overflowy' :
           'box-todo__list'
         }
