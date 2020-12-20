@@ -1,54 +1,63 @@
 import React from 'react';
 
-class Tabs extends React.Component {
-
-  countComplete = () => {
-    const { tasks, currentTag } = this.props
-
-    if (currentTag) {
-      const data = tasks.filter(task => task.group === currentTag)
-      return data
-    }
-    return tasks
+const Tabs = props => {
+  const tasksCompleted = () => {
+    return props.tasks.filter(task => {
+      if (props.tag) {
+        return task.ground === props.tag
+      }
+      return task
+    })
   }
 
-  render() {
-    const countTag = this.countComplete()
-    const count = countTag.filter(task => task.checked)
+  const tasksActive = () => {
+    return tasksCompleted().filter(task => task.checked)
+  }
 
-    return(
-      <>
-        <div className="tab-bottom">
-          <div className="tab-bottom__box-tab">
-            <span
-              className="tab-group tab-bottom__box-tab--all"
-              onClick={ this.props.onClickAllTasks }
-            >
-              All Tasks
-            </span>
+  return(
+    <>
+      <div className="tab-bottom">
+        <div className="tab-bottom__box-tab">
+          <span
+            className={
+              !props.completed ?
+              'tab-group tab-bottom__box-tab--all active' :
+              'tab-group tab-bottom__box-tab--all'
+            }
+            onClick={() => props.setCompleted('')}
+          >
+            All Tasks
+          </span>
 
-            <span
-              className="tab-group tab-bottom__box-tab--active"
-              onClick={ this.props.onClickActive }
-            >
-              Active
-            </span>
+          <span
+            className={
+              props.completed === '0' ?
+              'tab-group tab-bottom__box-tab--all active' :
+              'tab-group tab-bottom__box-tab--all'
+            }
+            onClick={() => props.setCompleted('0')}
+          >
+            Active
+          </span>
 
-            <span
-              className="tab-group tab-bottom__box-tab--completed"
-              onClick={ this.props.onClickCompl }
-            >
-              Completed
-            </span>
-          </div>
-
-          <span className="tab-bottom__list-completed">
-            {count.length} / { countTag.length } Completed
+          <span
+            className={
+              props.completed === '1' ?
+              'tab-group tab-bottom__box-tab--all active' :
+              'tab-group tab-bottom__box-tab--all'
+            }
+            onClick={() => props.setCompleted('1')}
+          >
+            Completed
           </span>
         </div>
-      </>
-    )
-  }
+
+        <span className="tab-bottom__list-completed">
+          {tasksActive().length} / {tasksCompleted().length} Completed
+        </span>
+      </div>
+    </>
+  )
 }
 
 export default Tabs;
