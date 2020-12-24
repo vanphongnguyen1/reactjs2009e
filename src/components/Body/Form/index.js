@@ -8,7 +8,6 @@ const Form = () => {
     gender: 'female',
     age: ''
   }
-
   const [user, setUser] = useState(initialState);
   const globalContextUser = useContext(ContextUser)
 
@@ -35,6 +34,7 @@ const Form = () => {
     }
 
     handlePushUser()
+    globalContextUser.setForm(false)
     setUser({
       name: '',
       gender: 'female',
@@ -48,7 +48,7 @@ const Form = () => {
         <form onSubmit={onSubmit}>
           <div className="box-popup">
 
-            <span className="icon-close">
+            <span className="icon-close" onClick={() => globalContextUser.setForm(false)}>
               <i className="fas fa-times" />
             </span>
 
@@ -101,7 +101,7 @@ const Form = () => {
             </button>
           </div>
         </form>
-          {/* <a href="#a" className="overlay-close"/> */}
+          <span className="overlay-close" onClick={() => globalContextUser.setForm(false)}/>
       </div>
     </>
   )

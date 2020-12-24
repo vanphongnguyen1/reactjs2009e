@@ -1,11 +1,34 @@
-import React from 'react';
+import React, {useContext} from 'react'
+import { ContextUser } from '../../Context/Context'
+import { Button, Space } from 'antd'
+import { difference } from 'lodash'
 
 const BtnOutTable = () => {
+  const gContextUser = useContext(ContextUser)
+  const {users, setUsers, userChecked, setUserChecked, setForm} = gContextUser
+
+  const handleDeleteUserChecked = () => {
+    const newData = difference(users, userChecked)
+
+    setUsers(newData)
+    setUserChecked([])
+  }
+
   return (
     <>
       <div className="box-active">
-        <button type="button" className="btn btn-primary btn-add">Add</button>
-        <button type="button" className="btn btn-danger btn-delete">Delete</button>
+        <Space size={5}>
+          <Button
+            type="primary"
+            onClick={() => setForm(true)}
+          >
+            Add
+          </Button>
+
+          <Button type="danger" onClick={handleDeleteUserChecked}>
+            Delete
+          </Button>
+        </Space>
       </div>
     </>
   )

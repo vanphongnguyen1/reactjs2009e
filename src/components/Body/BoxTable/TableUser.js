@@ -1,9 +1,58 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState} from 'react'
 import { ContextUser } from '../../Context/Context'
-import { Table, Space, Button, Popconfirm  } from 'antd'
+import { Table, Space, Button, Popconfirm, InputNumber, Input, Select, Form } from 'antd'
+
+const { Option } = Select
+const EditableCell = ({
+  editing,
+  dataIndex,
+  title,
+  inputType,
+  record,
+  index,
+  children,
+  ...restProps
+}) => {
+  const inputNode = dataIndex === 'age' ?
+    <InputNumber /> :
+    dataIndex === 'gender' ?
+    (
+      <Select>
+        <Option value="male">Male</Option>
+        <Option value="female">Female</Option>
+      </Select>
+    ) :
+     <Input />
+
+  return (
+    <td {...restProps}>
+      {editing ? (
+        <Form.Item
+          name={dataIndex}
+          style={{
+            margin: 0,
+          }}
+          rules={[
+            {
+              required: true,
+              message: `Please Input ${title}!`,
+            },
+          ]}
+        >
+          {inputNode}
+        </Form.Item>
+      ) : (
+        children
+      )}
+    </td>
+  )
+}
+
 const TableUser = () => {
+  const [form] = Form.useForm()
   const globalContextUser = useContext(ContextUser)
   const [editingId, setEditingId] = useState('')
+  const [data, setData] = [globalContextUser.users, globalContextUser.setUsers]
 
   const columns = [
     {
@@ -27,7 +76,7 @@ const TableUser = () => {
     {
       title: 'Action',
       key: 'action',
-      render: row => (
+      render: (name, record) => (
         <div className="box_active-table">
           <Space size={5}>
             {
@@ -35,19 +84,29 @@ const TableUser = () => {
                 (
                   <>
                     <button type="button"
-                      className="btn btn-success box_active-table--save">
+                      className="btn btn-success box_active-table--save"
+                      onClick={() => save(record.id)}
+                    >
                         Save
                     </button>
-                    <button type="button"
-                      className="btn btn-warning box_active-table--cancel"
-                      onClick={() => setEditingId('')}
+                    <Popconfirm
+                      title="Sure to cancel?"
+                      onConfirm={cancel}
+                      okText="Yes"
+                      cancelText="No"
+                      placement="top"
                     >
-                        Cancel
-                    </button>
+                      <button type="button"
+                        className="btn btn-warning box_active-table--cancel"
+                      >
+                          Cancel
+                      </button>
+                    </Popconfirm>
+                    
                   </>
                 ) :
                 (
-                  <Button type="primary" onClick={() => handleEdit(row)}>
+                  <Button type="primary" onClick={() => edit(record)}>
                     Edit
                   </Button>
                 )
@@ -56,12 +115,12 @@ const TableUser = () => {
             <Popconfirm
               title="Bạn muốn xóa User này!"
               placement="top"
-              onConfirm={() => handleDelete(row)}
+              onConfirm={() => handleDelete(record)}
               okText="Yes"
               cancelText="No"
             >
 
-              <Button type="danger" color="#F0AD4E">
+              <Button type="danger">
                 Delete
               </Button>
             </Popconfirm>
@@ -71,44 +130,97 @@ const TableUser = () => {
     },
   ]
 
-  const handleEdit = row => {
-    setEditingId(row.id)
+  const edit = record => {
+    form.setFieldsValue({
+      name: '',
+      age: '',
+      address: '',
+      ...record,
+    })
+    setEditingId(record.id)
   }
 
-  // const isEditing = user => user.id === editingId
+  const isEditing = user => user.id === editingId
+
+  const cancel = () => {
+    setEditingId('')
+  }
+
+  const save = async key => {
+    try {
+      const row = await form.validateFields()
+      const newData = [...data]
+      const index = newData.findIndex((item) => key === item.id)
+
+      if (index > -1) {
+        const item = newData[index]
+        newData.splice(index, 1, { ...item, ...row })
+        setData(newData)
+        setEditingId('')
+      } else {
+        newData.push(row)
+        setData(newData)
+        setEditingId('')
+      }
+    } catch (errInfo) {
+      console.log('Validate Failed:', errInfo)
+    }
+  }
 
   const handleDelete = row => {
-    const newUsers = globalContextUser.users.filter(user => user.id !== row.id)
-    globalContextUser.setUsers(newUsers)
+    const newUsers = data.filter(user => user.id !== row.id)
+    setData(newUsers)
   }
 
-  // const mergedColumns = columns.map(col => {
-  //   if (!col.editable) {
-  //     return col
-  //   }
-  //   return {
-  //     ...col,
-  //     onCell: record => ({
-  //       record,
-  //       inputType: col.dataIndex === 'age' ? 'number' : 'text',
-  //       dataIndex: col.dataIndex,
-  //       title: col.title,
-  //       editing: isEditing(record),
-  //     })
-  //   }
-  // })
+  const mergedColumns = columns.map(col => {
+    if (!col.editable) {
+      return col
+    }
+
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        inputType: col.dataIndex === 'age' ?
+          'number' :
+          col.dataIndex === 'name' ?
+          'text' :
+          'gender',
+        dataIndex: col.dataIndex,
+        title: col.title,
+        editing: isEditing(record),
+      }),
+    }
+  })
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      globalContextUser.setUserChecked(selectedRows)
+    },
+    getCheckboxProps: record => ({
+      name: record.name,
+    }),
+  };
 
   return (
-    <>
-      {
-        globalContextUser.users &&
-        <Table rowSelection={{}}
-          rowKey="id"
-          dataSource={globalContextUser.users}
-          columns={columns} 
-        />
-      }
-    </>
+    <Form form={form} component={false}>
+      <Table
+        rowSelection={{...rowSelection}}
+        components={{
+          body: {
+            cell: EditableCell,
+          },
+        }}
+        rowKey="id"
+        bordered
+        dataSource={data}
+        columns={mergedColumns}
+        rowClassName="editable-row"
+        pagination={{
+          onChange: cancel,
+        }}
+      />
+    </Form>
   )
 }
 
