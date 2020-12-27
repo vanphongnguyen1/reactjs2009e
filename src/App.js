@@ -4,8 +4,8 @@ import React from 'react';
 // import {MyGlobalContext} from './context/MyGlobalContext'
 // import TestUseMemo from './components/unit-23/UseMemo'
 // import ClipLoader from "react-spinners/ClipLoader";
-// import MyTable from "./components/unit-24/MyTable";
-import TestUseReducer from './components/unit-24/useReducer';
+import MyTable from "./components/unit-24/MyTable";
+// import TestUseReducer from './components/unit-24/useReducer';
 import 'antd/dist/antd.css'
 
 const App = () => {
@@ -40,8 +40,8 @@ const App = () => {
         <TestUseMemo/>
         { gContext.user && <UserList />}
       </MyGlobalContext.Provider> */}
-      {/* <MyTable /> */}
-      <TestUseReducer />
+      <MyTable />
+      {/* <TestUseReducer /> */}
     </>
   )
 }
