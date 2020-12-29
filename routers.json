@@ -1,0 +1,8 @@
+{
+  "/province/:id": "/provinces/:id",
+  "/district/:id": "/districts/:id",
+  "/ward/:id": "/wards/:id",
+
+  "/provinces/:id/district": "/districts?provinceId=:id",
+  "/districts/:id/wards": "/wards?districtId=:id"
+}
